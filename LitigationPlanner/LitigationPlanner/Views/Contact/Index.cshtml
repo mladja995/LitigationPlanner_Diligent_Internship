@@ -1,0 +1,146 @@
+﻿@model IEnumerable<LitigationPlanner.Models.Contact>
+
+@{
+    ViewBag.Title = "Contact";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <button type="button" class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Filters
+    </button>
+
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+@using (Html.BeginForm("Index", "Contact", FormMethod.Get))
+{
+    <div class="row collapse" id="collapseExample">
+        <div class="col-md-3">
+            <p>Name:<br /> @Html.TextBox("SearchName", null, new { @class = "form-control" })</p>
+            <p>Phone:<br /> @Html.TextBox("SearchPhone", null, new { @class = "form-control", type = "number" })</p>
+        </div>
+
+        <div class="col-md-3">
+            <p>Email:<br /> @Html.TextBox("SearchEmail", null, new { @class = "form-control" })</p>
+            <p>Address:<br /> @Html.TextBox("SearchAddress", null, new { @class = "form-control" })</p>
+
+        </div>
+
+        <div class="col-md-3">
+            <p>Occupation:<br /> @Html.TextBox("SearchOccupation", null, new { @class = "form-control" })</p>
+            <p>Company:<br /> @Html.TextBox("SearchCompany", null, new { @class = "form-control" })</p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <br />
+                <input type="submit" value="Filter" class="btn btn-light" />
+            </p>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            <input type="button" id="nameBtn" value="Name" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone2)
+        </th>
+        <th>
+            <input type="button" id="addressBtn" value="Address" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            <input type="button" id="legalEntityBtn" value="Legal entity" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="occupationBtn" value="Occupation" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="companyBtn" value="Company" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LegalEntity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Occupation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var searchString = '&SearchName=' + $('#SearchName').val() + '&SearchPhone=' + $('#SearchPhone').val()
+                + '&SearchEmail=' + $('#SearchEmail').val() + '&SearchAddress=' + $('#SearchAddress').val()
+                + '&SearchOccupation=' + $('#SearchOccupation').val() + '&SearchCompany=' + $('#SearchCompany').val();
+
+            $("#nameBtn").click(function () {
+                var sortOrder = '@ViewBag.NameSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#addressBtn").click(function () {
+                var sortOrder = '@ViewBag.AddressSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#companyBtn").click(function () {
+                var sortOrder = '@ViewBag.CompanySortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#legalEntityBtn").click(function () {
+                var sortOrder = '@ViewBag.LegalEntitySortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#occupationBtn").click(function () {
+                var sortOrder = '@ViewBag.OccupationSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+        });
+    </script>
+}

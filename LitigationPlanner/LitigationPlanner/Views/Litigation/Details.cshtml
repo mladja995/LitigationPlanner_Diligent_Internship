@@ -1,0 +1,122 @@
+﻿@model LitigationPlanner.Models.Litigation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Litigation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DefendantID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Defendant.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JudgeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Judge.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaintiffID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plaintiff.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfProcedureID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfProcedure.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAndTimeOfMaintenance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAndTimeOfMaintenance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfIstitution)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfIstitution)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProcedureIdentifier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProcedureIdentifier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourtroomNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourtroomNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.EngagedLawyers)
+        </dt>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+                @foreach (var item in Model.EngagedLawyers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

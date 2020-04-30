@@ -1,0 +1,129 @@
+﻿@model LitigationPlanner.Models.Litigation
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+<p class="error">@ViewBag.ErrorMessage</p>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Litigation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DefendantID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Defendant.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JudgeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Judge.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaintiffID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plaintiff.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfProcedureID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfProcedure.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAndTimeOfMaintenance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAndTimeOfMaintenance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfIstitution)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfIstitution)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProcedureIdentifier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProcedureIdentifier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourtroomNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourtroomNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EngagedLawyers)
+        </dt>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+                @foreach (var item in Model.EngagedLawyers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                    </tr>}
+            </table>
+        </dd>
+
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

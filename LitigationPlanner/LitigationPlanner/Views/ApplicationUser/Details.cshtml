@@ -1,0 +1,82 @@
+﻿@model LitigationPlanner.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Roles
+        </dt>
+        
+        @{  List<String> assignedRoles = ViewBag.AssignedRoles;
+
+            foreach (var role in assignedRoles)
+            {
+                <dd>
+                    @role
+                </dd>
+            }
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Litigations)
+        </dt>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Identifier</th>
+                    <th>Date and time</th>
+                </tr>
+                @{  List<LitigationPlanner.Models.Litigation> litigations = ViewBag.Litigations;
+                    foreach (var item in litigations)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProcedureIdentifier)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateAndTimeOfMaintenance)
+                            </td>
+                        </tr>
+                    }
+                 }
+            </table>
+        </dd>
+    
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

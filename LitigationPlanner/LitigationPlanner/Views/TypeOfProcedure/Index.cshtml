@@ -1,0 +1,70 @@
+﻿@model IEnumerable<LitigationPlanner.Models.TypeOfProcedure>
+
+@{
+    ViewBag.Title = "Procedure";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <button type="button" class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Filters
+    </button>
+
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+@using (Html.BeginForm("Index", "TypeOfProcedure", FormMethod.Get))
+{
+    <div class="row collapse" id="collapseExample">
+        <div class="col-md-3">
+            <p>
+                Name: @Html.TextBox("SearchString", null, new { @class = "form-control" })
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <br />
+                <input type="submit" value="Filter" class="btn btn-light" />
+            </p>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            <input type="button" id="nameBtn" value="Name" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#nameBtn").click(function () {
+                var sortOrder = '@ViewBag.NameSortParm';
+                var searchString = $('#SearchString').val();
+                location.href = '?sortOrder=' + sortOrder + '&SearchString=' + searchString;
+             });
+        });
+    </script>
+}

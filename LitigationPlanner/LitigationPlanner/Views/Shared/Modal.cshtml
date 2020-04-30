@@ -1,0 +1,37 @@
+﻿<div class="form-actions no-color">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Delete</button> |
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Please read the consequences carefully!</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Note: If you delete this object it may affect
+                    all objects that associated with it.
+                </p>
+                <p>
+                    Are you aware of consequences?
+                </p>
+                <p>
+                    If you don't want to do this, click 'x' in the top-right corner.
+                </p>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Yes, I want this" class="btn btn-danger" />}
+            </div>
+        </div>
+
+    </div>
+</div>
+

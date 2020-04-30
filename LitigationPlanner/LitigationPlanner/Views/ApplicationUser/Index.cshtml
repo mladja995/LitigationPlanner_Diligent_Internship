@@ -1,0 +1,103 @@
+﻿@model IEnumerable<LitigationPlanner.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "User";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <button type="button" class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Filters
+    </button>
+
+    @Html.ActionLink("Create New", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+</p>
+
+@using (Html.BeginForm("Index", "ApplicationUser", FormMethod.Get))
+{
+    <div class="row collapse" id="collapseExample">
+        <div class="col-md-3">
+            <p>First name:<br /> @Html.TextBox("SearchFirstName", null, new { @class = "form-control" })</p>
+        </div>
+
+        <div class="col-md-3">
+            <p>Last name:<br /> @Html.TextBox("SearchLastName", null, new { @class = "form-control" })</p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                Email:<br /> @Html.TextBox("SearchEmail", null, new { @class = "form-control" })
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <br />
+                <input type="submit" value="Filter" class="btn btn-light" />
+            </p>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            <input type="button" id="firstNameBtn" value="First name" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="lastNameBtn" value="Last name" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="emailBtn" value="Email" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var searchString = '&SearchFirstName=' + $('#SearchFirstName').val() + '&SearchLastName=' + $('#SearchLastName').val()
+                + '&SearchEmail=' + $('#SearchEmail').val();
+
+            $("#firstNameBtn").click(function () {
+                var sortOrder = '@ViewBag.FirstNameSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#lastNameBtn").click(function () {
+                var sortOrder = '@ViewBag.LastNameSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#emailBtn").click(function () {
+                var sortOrder = '@ViewBag.EmailSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+        });
+    </script>
+}
+

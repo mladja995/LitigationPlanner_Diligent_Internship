@@ -1,0 +1,189 @@
+﻿@model IEnumerable<LitigationPlanner.Models.Litigation>
+
+@{
+    ViewBag.Title = "Litigation";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+
+    <button type="button" class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Filters
+    </button>
+
+    @if (HttpContext.Current.User.IsInRole("User"))
+    {
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    }
+
+ 
+</p>
+
+@using (Html.BeginForm("Index", "Litigation", FormMethod.Get))
+{
+    <div class="row collapse" id="collapseExample">
+        <div class="col-md-4">
+            <p>Start date:<br /> @Html.TextBox("startSearchDate", null, new { @class = "form-control", type = "date" })</p>
+            <p>End date:<br /> @Html.TextBox("endSearchDate", null, new { @class = "form-control", type = "date" })</p>
+            <p>Institution:<br /> @Html.TextBox("searchInstitution", null, new { @class = "form-control"})</p>
+            <p>Identifier:<br /> @Html.TextBox("searchIdentifier", null, new { @class = "form-control" })</p>
+        </div>
+
+        <div class="col-md-4">
+            <p>Courtroom:<br /> @Html.TextBox("searchCourtroom", null, new { @class = "form-control" })</p>
+            <p>Location:<br /> @Html.TextBox("searchLocation", null, new { @class = "form-control" })</p>
+            <p>Procedure:<br /> @Html.TextBox("searchProcedure", null, new { @class = "form-control" })</p>
+            <p>Judge:<br /> @Html.TextBox("searchJudge", null, new { @class = "form-control" })</p>
+        </div>
+
+        <div class="col-md-4">
+            <p>Plaintiff:<br /> @Html.TextBox("searchPlaintiff", null, new { @class = "form-control" })</p>
+            <p>Defendant:<br /> @Html.TextBox("searchDefendant", null, new { @class = "form-control" })</p>
+            <p><input type="submit" value="Filter" class="btn btn-secondary" /></p>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            <input type="button" id="identifierBtn" value="Identifier" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="dateAndTimeBtn" value="Date and time" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="defendantBtn" value="Defendant" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="judgeBtn" value="Judge" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="plaintiffBtn" value="Plaintiff" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="locationBtn" value="Location" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="procedureBtn" value="Procedure" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="institutionBtn" value="Institution" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            <input type="button" id="courtroomBtn" value="Courtroom" class="btn btn-link" style="padding:0;" />
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Note)
+        </th>
+        @if (HttpContext.Current.User.IsInRole("User"))
+        {
+            <th></th>
+        }
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProcedureIdentifier)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAndTimeOfMaintenance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Defendant.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Judge.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plaintiff.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfProcedure.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfIstitution) 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourtroomNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Note)
+        </td>
+        @if (HttpContext.Current.User.IsInRole("User"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        }
+    </tr>
+}
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var searchString = '&startSearchDate=' + $('#startSearchDate').val() + '&endSearchDate=' + $('#endSearchDate').val()
+                + '&searchInstitution=' + $('#searchInstitution').val() + '&searchIdentifier=' + $('#searchIdentifier').val()
+                + '&searchCourtroom=' + $('#searchCourtroom').val() + '&searchLocation=' + $('#searchLocation').val()
+                + '&searchProcedure=' + $('#searchProcedure').val() + '&searchJudge=' + $('#searchJudge').val()
+                + '&searchPlaintiff=' + $('#searchPlaintiff').val() + '&searchDefendant=' + $('#searchDefendant').val();
+
+            $("#defendantBtn").click(function () {
+                var sortOrder = '@ViewBag.DefendantSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#judgeBtn").click(function () {
+                var sortOrder = '@ViewBag.JudgeSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#locationBtn").click(function () {
+                var sortOrder = '@ViewBag.LocationSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#plaintiffBtn").click(function () {
+                var sortOrder = '@ViewBag.PlaintiffSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#procedureBtn").click(function () {
+                var sortOrder = '@ViewBag.ProcedureSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+            });
+
+            $("#dateAndTimeBtn").click(function () {
+                var sortOrder = '@ViewBag.DateSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#institutionBtn").click(function () {
+                var sortOrder = '@ViewBag.InstitutionSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#identifierBtn").click(function () {
+                var sortOrder = '@ViewBag.IdentifierSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+
+            $("#courtroomBtn").click(function () {
+                var sortOrder = '@ViewBag.CourtroomSortParm';
+                location.href = '?sortOrder=' + sortOrder + searchString;
+             });
+        });
+    </script>
+}
